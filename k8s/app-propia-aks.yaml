@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-propia
+  labels:
+    app: app-propia
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-propia
+  template:
+    metadata:
+      labels:
+        app: app-propia
+    spec:
+      containers:
+        - name: app-propia
+          image: ghcr.io/REEMPLAZAR_USUARIO/app-propia:v1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-propia
+spec:
+  type: LoadBalancer
+  selector:
+    app: app-propia
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
